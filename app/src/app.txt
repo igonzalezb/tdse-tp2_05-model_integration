@@ -1,0 +1,28 @@
+app.c (app.h)
+   Endless loops, which execute tasks with fixed computing time. This 
+   sequential execution is only deviated from when an interrupt event occurs.
+   Cyclic Executive (Update by Time Code, period = 1mS)
+   
+   
+   
+ app_init() -> inicializa cada tarea, llamando a los init de cada una.
+ 
+ 
+ app_update() -> actualiza el ejecutor cíclico (Update by Time Code, period = 1mS) de tareas.
+ 
+ 
+ 
+ HAL_SYSTICK_Callback () -> actualiza contadores de ticks de la aplicación (g_app_tick_cnt) y de la
+tarea que lo requiera (g_task_xxxx_tick_cnt)
+
+
+
+
+
+WCET -> se ve el peor tiempo de ejecucion de cada tarea donde a=188, b=1, c=3. 
+
+Y la variable g_app_runtime_us=191 que es la suma de las otras tres.
+
+
+
+LOGGER_INFO -> Aumenta el tiempo de ejecucion de la tarea.

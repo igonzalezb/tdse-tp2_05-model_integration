@@ -1,0 +1,43 @@
+  task_sensor.c (task_sensor.h, task_sensor_attribute.h) 
+   Non-Blocking & Update By Time Code -> Sensor Modeling
+  
+...
+
+Proyecto: tdse-tp2_01-model_integration
+
+-------------------------------------------------------------------
+Analisis y descripcion del Codigo fuente:
+
+estados:
+	typedef enum task_sensor_st
+		 ST_BTN_XX_UP: el boton no esta presionado
+		 ST_BTN_XX_DOWN: el boton esta presionado
+		 ST_BTN_XX_RISING: transicion al soltar el boton
+		 ST_BTN_XX_FALLING: transicion al presionar el boton
+
+eventos:
+ 	 typedef put_event_task_system 
+	 	EV_BTN_XX_UP: boton inactivo
+		EV_BTN_XX_DOWN: boton activo
+		
+señales:
+		EV_SYS_XX_IDLE: boton no activo
+		EV_SYS_XX_ACTIVE: boton activo
+	
+acciones:
+		put_event_task_system(event): genera el evento para "system"
+		
+estructuras de datos:
+		typedef enum task_sensor_st: informacion de hardware del sensor (	task_sensor_id_t	identifier, gpio_port, pin, estado de pin, tick_max, eventos)
+		task_sensor_dta_t: informacion de software del sensor (tick, estado y evento)
+
+array:
+		task_sensor_dta_t task_sensor_dta_list[]: listado de sensores
+
+metodos:
+	- task_sensor_statechart(void): analiza con el estado y el evento actual, el siguiente evento. 
+	- task_sensor_init(void *parameters): inicializa todos los sensores a su esado original.
+	- task_sensor_update(void *parameters): actualiza el "task_sensor_statechart" con un booleano segun G_TASK_SEN_TICK_CNT_INI < g_task_sensor_tick_cnt 
+
+g_app_runtime_us: contador, cuanto tarda en ejecutar todas las tareas dentro de un periodo de actualizacion 
+	

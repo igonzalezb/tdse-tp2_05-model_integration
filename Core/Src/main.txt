@@ -1,0 +1,16 @@
+El programa inicia aca (luego del startup -> donde se inicializa el hardware).
+
+main() -> es la funcion principal que llama a HAL_Init() y SystemClock_Config(), 
+			donde se inicializan SysTick y configura SystemCoreClock. Luego inicializa
+			los perifericos e inicializa la app en app_init().
+		Luego en el while(1) -> va actualizando la app.
+
+		
+SysTick -> arranca en 0 y se configura en HAL_init, luego en SystemClock_Config se modifica.
+
+
+
+
+SystemCoreClock -> Arranca en un valor minimo y luego se configura en SystemClock_Config en 64MHz
+
+

@@ -1,0 +1,11 @@
+   
+task_XXXXX_init() -> inicializa el contador de ejecucion
+   
+
+  
+  
+  task_a.c (task_a.h) 	-> Codigo Bloqueante (es un for)
+
+  task_b.c (task_b.h)   -> Codigo no bloqueante
+
+  task_c.c (task_c.h)   -> Actualiza con un clock, periodo = 1mS
