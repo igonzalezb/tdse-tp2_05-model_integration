@@ -5,3 +5,99 @@
    Non-Blocking Code
 
 ...
+
+Proyecto: tdse-tp2_03-model_integration
+
+-------------------------------------------------------------------
+Analisis y descripcion del Codigo fuente:
+
+task_system.c
+
+tipo de datos: - task_system_dta_t: task_system_dta, *p_task_system_dta. (tipo enum)
+               - char: *p_task_system, *p_task_system_ 
+               - uint32_t: g_task_system_cnt
+               - uint32_t: g_task_system_tick_cnt -> volatile 
+			   - task_system_st_t: state -> tipo enum
+			   - task_system_ev_t: event -> tipo enum
+			   - bool: b_event  
+		
+estructuras de datos: task_system_dta_t, task_system_dta
+	
+metodos: - void task_system_init(void *parameters);
+		 - init_queue_event_task_system();
+	     - void task_system_update(void *parameters);
+	     - void task_system_statechart(void);
+	     - put_event_task_system();
+	     - LOGGER_INFO();
+	     
+identificadores: - task_system_init, task_system_update, task_system_statechart, init_queue_event_task_system, 
+						any_event_task_system, get_event_task_system, put_event_task_actuator -> id de las funciones				
+				  - p_task_system_dta, state, event, b_event -> variables locales en task_system_init
+				  - b_time_update_required -> variable local en task_system_update
+				  - task_system_dta, g_task_system_cnt, g_task_system_tick_cnt -> variables globales / externas
+				  - task_system_dta_t, task_system_st_t, task_system_ev_t, bool -> tipos de datos definidos por el usuario
+				  - G_TASK_SYS_CNT_INI, G_TASK_SYS_TICK_CNT_INI, DEL_SYS_MIN, DEL_SYS_MED, DEL_SYS_MAX, SYSTEM_DTA_QTY -> constantes / macros
+				  - p_task_system, p_task_system_ -> strings / punteros a char
+							
+---------------------------
+task_actuator_attribute.h
+
+eventos: EV_SYS_LOOP_DET, EV_SYS_MANUAL_BTN, EV_SYS_NOT_LOOP_DET, EV_SYS_IR_PHO_CELL, EV_SYS_IR_NOT_PHO_CELL
+
+
+estados: ST_SYS_IDLE, ST_SYS_ACTIVE_01,  ST_SYS_ACTIVE_02,  ST_SYS_ACTIVE_03,  ST_SYS_ACTIVE_04,  ST_SYS_ACTIVE_05,  ST_SYS_ACTIVE_06
+
+
+identificadores: - tick, state, event, flag, task_system_dta -> id de esctuctura (task_system_dta_t)
+				 - EV_SYS_IDLE, EV_SYS_LOOP_DET, EV_SYS_NOT_LOOP_DET, EV_SYS_MANUAL_BTN, EV_SYS_NOT_MANUAL_BTN,
+							 EV_SYS_IR_PHO_CELL, EV_SYS_NOT_IR_PHO_CELL -> id enum (task_system_ev_t)
+				 - 	ST_SYS_IDLE, ST_SYS_ACTIVE_01, ST_SYS_ACTIVE_02, ST_SYS_ACTIVE_03, ST_SYS_ACTIVE_04,
+							 ST_SYS_ACTIVE_05, ST_SYS_ACTIVE_06} -> id enum task_system_st
+		
+tipo de datos: - uint32_t			tick;
+			   - task_system_st_t	state;
+		   	   - task_system_ev_t	event;
+			   - bool				flag;
+			   - task_system_dta_t task_system_dta; -> extern
+		
+estructuras de datos:
+				- typedef enum task_system_ev {EV_SYS_IDLE,
+											 EV_SYS_LOOP_DET,
+											 EV_SYS_NOT_LOOP_DET,
+											 EV_SYS_MANUAL_BTN,
+											 EV_SYS_NOT_MANUAL_BTN,
+											 EV_SYS_IR_PHO_CELL,
+											 EV_SYS_NOT_IR_PHO_CELL} task_system_ev_t;
+				
+				
+				- typedef enum task_system_st {ST_SYS_IDLE,
+											 ST_SYS_ACTIVE_01,
+											 ST_SYS_ACTIVE_02,
+											 ST_SYS_ACTIVE_03,
+											 ST_SYS_ACTIVE_04,
+											 ST_SYS_ACTIVE_05,
+											 ST_SYS_ACTIVE_06} task_system_st_t;
+				
+				- typedef struct
+				{
+					uint32_t			tick;
+					task_system_st_t	state;
+					task_system_ev_t	event;
+					bool				flag;
+				} task_system_dta_t;
+
+---------------------------
+task_system_interface.h
+
+metodos: - extern void init_queue_event_task_system(void);
+         - extern void put_event_task_system(task_system_ev_t event);
+         - extern task_system_ev_t get_event_task_system(void);
+         - extern bool any_event_task_system(void);
+
+tipo de datos (usados pero no definidos): - task_system_ev_t
+		 								  - bool
+		 								  
+identificadores: - init_queue_event_task_system
+		         - extern void put_event_task_system
+		         - extern task_system_ev_t get_event_task_system
+		         - extern bool any_event_task_system
